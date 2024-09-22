@@ -25,3 +25,7 @@ function adicionar() {
         })
     }
 }
+
+function limpar() {
+    carrinho = [];
+}
