@@ -15,17 +15,43 @@ function adicionar() {
     console.log(quantidade);
 
     if (carrinho.every((elem) => elem.nome !== nome)) {
-        carrinho.push({ nome: nome, valor: valor, quantidade: quantidade })
+        carrinho.push({ nome: nome, valor: valor, quantidade: quantidade, valorTotal: valor * quantidade })
         console.log(carrinho);
     } else {
         carrinho.map((elem) => {
             if (elem.nome == nome) {
-                elem.quantidade = elem.quantidade + quantidade
+                elem.quantidade = elem.quantidade + quantidade;
+                elem.valorTotal = elem.quantidade * elem.valor;
             }
         })
     }
+
+    atualizaListagemCarrinho();
 }
 
 function limpar() {
     carrinho = [];
+
+    atualizaListagemCarrinho();
+}
+
+function atualizaListagemCarrinho() {
+    let listaProdutos = document.getElementById('lista-produtos');
+    let elemValorTotal = document.getElementById('valor-total');
+
+    let texto = "";
+    let valorTotal = 0;
+    carrinho.map((elem) => {
+        valorTotal += elem.valorTotal;
+        texto +=
+            '<section class="carrinho__produtos__produto">' +
+            '<span class="texto-azul">' + elem.quantidade + 'x </span>' +
+            elem.nome +
+            '<span class="texto-azul"> R$' + elem.valorTotal + '</span>' +
+            '</section>';
+
+    })
+
+    listaProdutos.innerHTML = texto;
+    elemValorTotal.innerText = 'R$' + valorTotal;
 }
